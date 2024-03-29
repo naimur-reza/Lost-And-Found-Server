@@ -5,21 +5,12 @@ const registerUser = async (payload: TUserPayload) => {
   const { name, email, password, profile } = payload;
   const hashPassword = bcrypt.hashSync(password, 10);
 
-  const result = await prisma.$transaction(async transaction => {
+  const registeredUser = await prisma.$transaction(async transaction => {
     const user = await transaction.user.create({
       data: {
         name,
         email,
         password: hashPassword,
-      },
-      // todo: profile coming null
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-        updatedAt: true,
-        profile: true,
       },
     });
 
@@ -30,10 +21,19 @@ const registerUser = async (payload: TUserPayload) => {
         age: profile.age,
       },
     });
+
     return user;
   });
+  const result = await prisma.user.findUnique({
+    where: {
+      id: registeredUser.id,
+    },
+    include: {
+      profile: true,
+    },
+  });
 
-  return { result };
+  return { ...result, password: undefined };
 };
 
 const loginUser = () => {
