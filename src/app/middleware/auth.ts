@@ -18,6 +18,8 @@ const auth = () => {
       },
     });
 
+    req.user = user;
+
     next();
   });
 };
