@@ -12,3 +12,79 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String
+  password    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  userProfile UserProfile?
+  claim       Claim[]
+  foundItem   FoundItem[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  bio       String
+  age       Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("userProfiles")
+}
+
+model FoundItem {
+  id            String   @id @default(uuid())
+  userId        String
+  categoryId    String
+  description   String
+  location      String
+  foundItemName String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  foundItemCategory FoundItemCategory @relation(fields: [categoryId], references: [id])
+  user              User              @relation(fields: [userId], references: [id])
+  claim             Claim[]
+
+  @@map("foundItems")
+}
+
+model FoundItemCategory {
+  id        String      @id @default(uuid())
+  name      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  foundItem FoundItem[]
+
+  @@map("foundItemsCategories")
+}
+
+model Claim {
+  id                     String   @id @default(uuid())
+  userId                 String
+  foundItemId            String
+  status                 Status
+  distinguishingFeatures String
+  lostDate               DateTime
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id])
+  foundItem FoundItem @relation(fields: [foundItemId], references: [id])
+
+  @@map("claims")
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
