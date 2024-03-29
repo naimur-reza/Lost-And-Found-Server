@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import globalErrorHandler from "./app/handlers/GlobalErrorHanlder";
 import notFound from "./app/handlers/NotFound";
 import cors from "cors";
+import { appRouter } from "./app/routes";
 
 export const app: Application = express();
 
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // app router handling
-app.use();
+app.use(appRouter);
 
 app.get("/", (req, res) => {
   res.send("Running");
