@@ -14,20 +14,20 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  name        String
-  email       String
-  password    String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  userProfile UserProfile?
-  claim       Claim[]
-  foundItem   FoundItem[]
+  id        String      @id @default(uuid())
+  name      String
+  email     String      @unique
+  password  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  profile   Profile?
+  claim     Claim[]
+  foundItem FoundItem[]
 
   @@map("users")
 }
 
-model UserProfile {
+model Profile {
   id        String   @id @default(uuid())
   userId    String   @unique
   bio       String
@@ -37,7 +37,7 @@ model UserProfile {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("userProfiles")
+  @@map("profiles")
 }
 
 model FoundItem {
