@@ -12,10 +12,10 @@ const register: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const login: RequestHandler = catchAsync(async (req, res) => {
-  const user = await authServices.loginUser();
+  const user = await authServices.loginUser(req.body);
   res.status(200).json({
     success: true,
-    message: "User registered successfully!",
+    message: "User logged in successfully",
     data: user,
   });
 });

@@ -1,7 +1,10 @@
 import prisma from "../../shared/prisma";
-import { TUserPayload } from "../User/user.interface";
 import bcrypt from "bcrypt";
-const registerUser = async (payload: TUserPayload) => {
+import { TLogin, TRegister } from "./auth.interface";
+import GenericError from "../../errors/GenericError";
+import generateToken from "../../utils/generateToken";
+
+const registerUser = async (payload: TRegister) => {
   const { name, email, password, profile } = payload;
   const hashPassword = bcrypt.hashSync(password, 10);
 
@@ -36,8 +39,31 @@ const registerUser = async (payload: TUserPayload) => {
   return { ...result, password: undefined };
 };
 
-const loginUser = () => {
-  console.log("Hitted");
+const loginUser = async (payload: TLogin) => {
+  const { email, password } = payload;
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      email,
+    },
+  });
+
+  const comparePassword = bcrypt.compareSync(password, user.password);
+
+  if (!comparePassword) throw new GenericError(400, "Password doesn't matched");
+
+  const jwtPayload = {
+    email: user.email,
+  };
+
+  const token = generateToken(jwtPayload, "secret", "1d");
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    token,
+  };
 };
 
 export const authServices = {
