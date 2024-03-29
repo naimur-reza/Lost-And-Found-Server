@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // app router handling
-app.use(appRouter);
+app.use("/api/v1", appRouter);
 
 app.get("/", (req, res) => {
   res.send("Running");

@@ -2,17 +2,30 @@
 
 import { NextFunction, Request, Response } from "express";
 
+import { ZodError } from "zod";
+import { handleZodError } from "../errors/handleZodError";
+import { IGenericError } from "../interfaces/error";
+
 export const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  console.log("Touch error...");
-  return res.status(err.statusCode || 500).json({
-    success: false,
+  let generalError: IGenericError = {
+    status: err.status || 500,
     message: err.message || "Something broke!",
-    error: err,
+    errorDetails: err,
+  };
+
+  if (err instanceof ZodError) {
+    generalError = handleZodError(err);
+  }
+
+  return res.status(generalError.status).json({
+    success: false,
+    message: generalError.message,
+    errorDetails: generalError.errorDetails,
   });
 };
 
