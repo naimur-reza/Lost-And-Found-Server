@@ -14,7 +14,7 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "userProfiles" (
+CREATE TABLE "profiles" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "bio" TEXT NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE "userProfiles" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "userProfiles_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -54,7 +54,7 @@ CREATE TABLE "claims" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "foundItemId" TEXT NOT NULL,
-    "status" "Status" NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "distinguishingFeatures" TEXT NOT NULL,
     "lostDate" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,10 +64,13 @@ CREATE TABLE "claims" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "userProfiles_userId_key" ON "userProfiles"("userId");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "profiles_userId_key" ON "profiles"("userId");
 
 -- AddForeignKey
-ALTER TABLE "userProfiles" ADD CONSTRAINT "userProfiles_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "profiles" ADD CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "foundItems" ADD CONSTRAINT "foundItems_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "foundItemsCategories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
