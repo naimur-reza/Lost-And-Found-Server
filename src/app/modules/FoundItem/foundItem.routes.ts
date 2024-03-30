@@ -13,4 +13,6 @@ router.post(
   foundItemController.reportFoundItem,
 );
 
+router.get("/", auth(), foundItemController.getAllFoundItems);
+
 export const foundItemRoutes = router;
