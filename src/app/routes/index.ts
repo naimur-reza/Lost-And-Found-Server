@@ -17,7 +17,7 @@ const options = [
     route: userRoutes,
   },
   {
-    path: "/found-item-category",
+    path: "/found-item-categories",
     route: foundItemCategoryRoutes,
   },
   {
