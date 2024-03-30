@@ -13,7 +13,7 @@ const options = [
     route: authRoutes,
   },
   {
-    path: "/users",
+    path: "/",
     route: userRoutes,
   },
   {
