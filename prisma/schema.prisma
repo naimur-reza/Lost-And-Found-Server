@@ -50,9 +50,9 @@ model FoundItem {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  foundItemCategory FoundItemCategory @relation(fields: [categoryId], references: [id])
-  user              User              @relation(fields: [userId], references: [id])
-  claim             Claim[]
+  category FoundItemCategory @relation(fields: [categoryId], references: [id])
+  user     User              @relation(fields: [userId], references: [id])
+  claim    Claim[]
 
   @@map("foundItems")
 }

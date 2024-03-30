@@ -53,6 +53,7 @@ const loginUser = async (payload: TLogin) => {
   if (!comparePassword) throw new GenericError(400, "Password doesn't matched");
 
   const jwtPayload = {
+    id: user.id,
     email: user.email,
   };
 

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { userRoutes } from "../modules/User/user.routes";
 import { authRoutes } from "../modules/Auth/auth.routes";
 import { foundItemCategoryRoutes } from "../modules/FoundItemCategory/foundItemCategory.routes";
+import { foundItemRoutes } from "../modules/FoundItem/foundItem.routes";
 
 const router = Router();
 
@@ -17,6 +18,10 @@ const options = [
   {
     path: "/found-item-category",
     route: foundItemCategoryRoutes,
+  },
+  {
+    path: "/found-items",
+    route: foundItemRoutes,
   },
 ];
 
