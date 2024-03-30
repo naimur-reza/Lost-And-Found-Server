@@ -13,8 +13,14 @@ app.use(express.json());
 // app router handling
 app.use("/api/", appRouter);
 
+// global endpoint
 app.get("/", (req, res) => {
-  res.send("Running");
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: "Lost and Found System is running",
+    data: null,
+  });
 });
 
 // global error handler
