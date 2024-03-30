@@ -10,6 +10,13 @@ const claimSchema = object({
   }),
 });
 
+const updateClaimSchema = object({
+  body: object({
+    status: string({ required_error: "Status is required." }),
+  }),
+});
+
 export const claimValidationSchema = {
   claimSchema,
+  updateClaimSchema,
 };

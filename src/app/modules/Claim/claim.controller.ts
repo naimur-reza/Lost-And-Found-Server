@@ -23,7 +23,20 @@ const getAllClaims: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const updateClaimStatus: RequestHandler = catchAsync(async (req, res) => {
+  const { claimId } = req.params;
+  const { status } = req.body;
+  const result = await claimServices.updateClaimStatus(claimId, status);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "Claim updated successfully",
+    data: result,
+  });
+});
+
 export const claimController = {
   createClaim,
   getAllClaims,
+  updateClaimStatus,
 };
