@@ -13,6 +13,19 @@ const getMyProfile: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const updateMyProfile: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user;
+  const payload = req.body;
+  const result = await userService.updateMyProfile(user, payload);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "User profile updated successfully",
+    data: result,
+  });
+});
+
 export const userController = {
   getMyProfile,
+  updateMyProfile,
 };

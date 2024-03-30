@@ -1,14 +1,13 @@
 import { JwtPayload } from "jsonwebtoken";
 import prisma from "../../shared/prisma";
+import { Profile } from "@prisma/client";
 
-const getMyProfile = async (payload: JwtPayload) => {
+const getMyProfile = async (jwtPayload: JwtPayload) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
-      id: payload.id,
+      id: jwtPayload.id,
     },
   });
-
-  console.log(user);
 
   const result = await prisma.profile.findUnique({
     where: {
@@ -30,6 +29,39 @@ const getMyProfile = async (payload: JwtPayload) => {
   return result;
 };
 
+const updateMyProfile = async (
+  jwtPayload: JwtPayload,
+  payload: Partial<Profile>,
+) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: jwtPayload.id,
+    },
+  });
+
+  const result = await prisma.profile.update({
+    where: {
+      userId: user.id,
+    },
+
+    data: payload,
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
 export const userService = {
   getMyProfile,
+  updateMyProfile,
 };
