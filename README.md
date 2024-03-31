@@ -48,9 +48,11 @@ To run this project, you will need to add the following environment variables to
 
 ## Tech Stack
 
-**Server:** Node, Express, Prisma, TypeScript
+**Server:** Node, Express, Typescript
 
-**Database:** Postgresql
+**Database:** Postgresql, Prisma
+
+**Authentication**: JSON Web Tokens (JWT)
 
 **Validation**: Zod, EsLint
 
