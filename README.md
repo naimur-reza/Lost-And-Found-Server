@@ -53,4 +53,5 @@ To run this project, you will need to add the following environment variables to
 **Database:** Postgresql
 
 **Validation**: Zod, EsLint
-"# Lost-And-Found-Server"
+
+**Deployment**: Supabase, Vercel
