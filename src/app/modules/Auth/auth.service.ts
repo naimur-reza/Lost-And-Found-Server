@@ -57,7 +57,11 @@ const loginUser = async (payload: TLogin) => {
     email: user.email,
   };
 
-  const token = generateToken(jwtPayload, "secret", "1d");
+  const token = generateToken(
+    jwtPayload,
+    process.env.JWT_ACCESS_SECRET!,
+    process.env.JWT_TOKEN_EXPIRES_IN!,
+  );
 
   return {
     id: user.id,

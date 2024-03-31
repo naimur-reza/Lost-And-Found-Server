@@ -42,9 +42,9 @@ To run this project, you will need to add the following environment variables to
 
 `DATABASE_URL`
 
-`JWT_SECRET`
+`JWT_ACCESS_SECRET`
 
-`NODE_ENV`
+`JWT_TOKEN_EXPIRES_IN`
 
 ## Tech Stack
 

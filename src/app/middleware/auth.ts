@@ -9,7 +9,7 @@ const auth = () => {
     const token = req.headers.authorization as string;
     if (!token) throw new GenericError(401, "Unauthorized access");
 
-    const user = verifyToken(token, "secret");
+    const user = verifyToken(token, process.env.JWT_ACCESS_SECRET!);
     if (!user) throw new GenericError(401, "Unauthorized access");
 
     await prisma.user.findUniqueOrThrow({
