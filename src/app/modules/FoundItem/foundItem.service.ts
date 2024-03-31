@@ -42,7 +42,7 @@ const reportFoundItemIntoDB = async (user: JwtPayload, payload: any) => {
 const getAllFoundItemsFromDB = async (query: any) => {
   const {
     page = 1,
-    limit = 3,
+    limit = 10,
     searchTerm,
     sortBy,
     sortOrder = "asc",

@@ -6,7 +6,7 @@ import { ZodError } from "zod";
 import { handleZodError } from "../errors/handleZodError";
 import { IGenericError } from "../interfaces/error";
 
-export const globalErrorHandler = (
+const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
