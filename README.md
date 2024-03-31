@@ -13,7 +13,7 @@ The Lost and Found System is a web application designed to help users report los
 Clone the project
 
 ```bash
-  git clone repo_link
+  git clone https://github.com/naimur-reza/Lost-And-Found-Server
 ```
 
 Go to the project directory
@@ -25,13 +25,13 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install
+  pnpm install
 ```
 
 Start the server
 
 ```bash
-  npm run dev
+  pnpm  dev
 ```
 
 ## Environment Variables
