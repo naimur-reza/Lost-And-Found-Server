@@ -17,6 +17,7 @@ model User {
   id        String      @id @default(uuid())
   name      String
   email     String      @unique
+  mobile    String?
   password  String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
