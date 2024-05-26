@@ -24,6 +24,7 @@ model User {
   profile   Profile?
   claim     Claim[]
   foundItem FoundItem[]
+  lostItem  LostItem[]
 
   @@map("users")
 }
@@ -31,8 +32,8 @@ model User {
 model Profile {
   id        String   @id @default(uuid())
   userId    String   @unique
-  bio       String
-  age       Int
+  bio       String?
+  age       Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -48,6 +49,7 @@ model FoundItem {
   description   String
   location      String
   foundItemName String
+  image         String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -66,6 +68,37 @@ model FoundItemCategory {
   foundItem FoundItem[]
 
   @@map("foundItemsCategories")
+}
+
+
+model LostItem {
+  id                String   @id @default(uuid())
+  userId            String
+  itemName          String
+  categoryId        String
+  date              DateTime
+  brand             String
+  image             String
+  timeLost          String
+  primaryColor      String
+  secondaryColor    String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+ 
+  category LostItemCategory @relation(fields: [categoryId], references: [id])
+  user     User              @relation(fields: [userId], references: [id]) 
+  @@map("lostItems")
+}
+
+
+model LostItemCategory {
+  id        String      @id @default(uuid())
+  name      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  lostItem  LostItem[]
+
+  @@map("lostItemsCategories")
 }
 
 model Claim {

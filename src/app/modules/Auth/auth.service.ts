@@ -5,7 +5,7 @@ import GenericError from "../../errors/GenericError";
 import generateToken from "../../utils/generateToken";
 
 const registerUser = async (payload: TRegister) => {
-  const { name, email, password, profile, mobile } = payload;
+  const { name, email, password, mobile } = payload;
   const hashPassword = bcrypt.hashSync(password, 10);
 
   const registeredUser = await prisma.$transaction(async transaction => {
@@ -21,8 +21,6 @@ const registerUser = async (payload: TRegister) => {
     await transaction.profile.create({
       data: {
         userId: user.id,
-        bio: profile.bio,
-        age: profile.age,
       },
     });
 

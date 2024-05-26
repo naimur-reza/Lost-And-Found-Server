@@ -6,6 +6,7 @@ const foundItemSchema = object({
     foundItemName: string().min(1, { message: "foundItemName is required." }),
     description: string().min(1, { message: "description is required." }),
     location: string().min(1, { message: "location is required." }),
+    image: string().min(1, { message: "image is required." }),
   }),
 });
 
