@@ -4,12 +4,13 @@ import { lostItemCategoryController } from "./lostItemCategory.controller";
 
 import auth from "../../middleware/auth";
 import { lostItemCategoryValidation } from "./lostItemCategory.validation";
+import { UserRole } from "../../constant/userRole";
 
 const router = Router();
 
 router.post(
   "/",
-  auth(),
+  auth(UserRole.Admin),
   validateRequest(lostItemCategoryValidation.createLostItemCategorySchema),
   lostItemCategoryController.createLostItemCategory,
 );
