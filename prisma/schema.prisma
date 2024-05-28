@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,14 +11,15 @@ model User {
   id        String      @id @default(uuid())
   name      String
   email     String      @unique
-  mobile    String?
   password  String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  profile   Profile?
+  mobile    String?
+  role      USER_ROLE   @default(USER)
   claim     Claim[]
   foundItem FoundItem[]
   lostItem  LostItem[]
+  profile   Profile?
 
   @@map("users")
 }
@@ -36,26 +31,24 @@ model Profile {
   age       Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("profiles")
 }
 
 model FoundItem {
-  id            String   @id @default(uuid())
+  id            String            @id @default(uuid())
   userId        String
   categoryId    String
   description   String
   location      String
   foundItemName String
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
   image         String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  category FoundItemCategory @relation(fields: [categoryId], references: [id])
-  user     User              @relation(fields: [userId], references: [id])
-  claim    Claim[]
+  claim         Claim[]
+  category      FoundItemCategory @relation(fields: [categoryId], references: [id])
+  user          User              @relation(fields: [userId], references: [id])
 
   @@map("foundItems")
 }
@@ -70,49 +63,46 @@ model FoundItemCategory {
   @@map("foundItemsCategories")
 }
 
-
 model LostItem {
-  id                String   @id @default(uuid())
-  userId            String
-  itemName          String
-  categoryId        String
-  date              DateTime
-  brand             String
-  image             String
-  timeLost          String
-  primaryColor      String
-  secondaryColor    String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
- 
-  category LostItemCategory @relation(fields: [categoryId], references: [id])
-  user     User              @relation(fields: [userId], references: [id]) 
+  id             String           @id @default(uuid())
+  userId         String
+  itemName       String
+  categoryId     String
+  date           DateTime
+  brand          String
+  image          String
+  timeLost       String
+  primaryColor   String
+  secondaryColor String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  category       LostItemCategory @relation(fields: [categoryId], references: [id])
+  user           User             @relation(fields: [userId], references: [id])
+
   @@map("lostItems")
 }
 
-
 model LostItemCategory {
-  id        String      @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   lostItem  LostItem[]
 
   @@map("lostItemsCategories")
 }
 
 model Claim {
-  id                     String   @id @default(uuid())
+  id                     String    @id @default(uuid())
   userId                 String
   foundItemId            String
-  status                 Status   @default(PENDING)
+  status                 Status    @default(PENDING)
   distinguishingFeatures String
   lostDate               DateTime
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
-
-  user      User      @relation(fields: [userId], references: [id])
-  foundItem FoundItem @relation(fields: [foundItemId], references: [id])
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  foundItem              FoundItem @relation(fields: [foundItemId], references: [id])
+  user                   User      @relation(fields: [userId], references: [id])
 
   @@map("claims")
 }
@@ -121,4 +111,9 @@ enum Status {
   PENDING
   APPROVED
   REJECTED
+}
+
+enum USER_ROLE {
+  USER
+  ADMIN
 }
