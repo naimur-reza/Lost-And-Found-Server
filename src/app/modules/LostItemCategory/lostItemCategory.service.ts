@@ -8,6 +8,12 @@ const createLostItemCategory = async (payload: { name: string }) => {
   return result;
 };
 
+const getAllLostItemCategories = async () => {
+  const result = await prisma.lostItemCategory.findMany();
+  return result;
+};
+
 export const lostItemCategoryService = {
   createLostItemCategory,
+  getAllLostItemCategories,
 };

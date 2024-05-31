@@ -6,5 +6,7 @@ export interface ILostItem {
   primaryColor: string;
   secondaryColor: string;
   timeLost: string;
+  location: string;
+  description: string;
   image: string;
 }

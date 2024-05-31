@@ -15,4 +15,6 @@ router.post(
   lostItemCategoryController.createLostItemCategory,
 );
 
+router.get("/", lostItemCategoryController.getAllLostItemCategories);
+
 export const lostItemCategoryRoutes = router;

@@ -39,13 +39,19 @@ model Profile {
 model FoundItem {
   id            String            @id @default(uuid())
   userId        String
+  itemName      String
   categoryId    String
-  description   String
+  description   String?
   location      String
-  foundItemName String
+  date          DateTime
+  brand         String
+  image         String
+  timeFound     String
+  primaryColor  String
+  isClaimed     Boolean @default(false)
+  secondaryColor String
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
-  image         String
   claim         Claim[]
   category      FoundItemCategory @relation(fields: [categoryId], references: [id])
   user          User              @relation(fields: [userId], references: [id])
@@ -68,12 +74,15 @@ model LostItem {
   userId         String
   itemName       String
   categoryId     String
+  description    String
+  location       String
   date           DateTime
   brand          String
   image          String
   timeLost       String
   primaryColor   String
   secondaryColor String
+  isFound        Boolean @default(false) 
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   category       LostItemCategory @relation(fields: [categoryId], references: [id])

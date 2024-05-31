@@ -11,6 +11,17 @@ const createLostItemCategory: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+
+const getAllLostItemCategories : RequestHandler = catchAsync(async (req, res) => {
+  const result = await lostItemCategoryService.getAllLostItemCategories();
+  res.status(200).json({
+    success: true,
+    message: "Lost item categories retrieved",
+    data: result,
+  });
+});
+
+
 export const lostItemCategoryController = {
-  createLostItemCategory,
+  createLostItemCategory,getAllLostItemCategories
 };

@@ -8,6 +8,7 @@ import { USER_ROLE } from "@prisma/client";
 const auth = (...requiredRoles: USER_ROLE[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization as string;
+    console.log(token);
     if (!token) throw new GenericError(401, "Unauthorized access");
 
     const user = verifyToken(token, process.env.JWT_ACCESS_SECRET!);

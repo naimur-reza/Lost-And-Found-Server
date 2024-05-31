@@ -29,7 +29,7 @@ const reportFoundItemIntoDB = async (user: JwtPayload, payload: any) => {
       },
       categoryId: true,
       category: true,
-      foundItemName: true,
+      itemName: true,
       description: true,
       location: true,
       createdAt: true,
