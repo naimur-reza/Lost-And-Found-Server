@@ -14,10 +14,6 @@ router.post(
   lostItemController.reportLostItem,
 );
 
-router.get(
-  "/",
-  auth(UserRole.Admin, UserRole.User),
-  lostItemController.getAllLostItems,
-);
+router.get("/", lostItemController.getAllLostItems);
 
 export const lostItemRouter = router;

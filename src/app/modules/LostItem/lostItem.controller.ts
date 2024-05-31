@@ -9,7 +9,7 @@ const reportLostItem: RequestHandler = catchAsync(async (req, res) => {
   res.status(201).json({
     success: true,
     statusCode: 201,
-    message: "Found item reported successfully",
+    message: "Lost item reported successfully",
     data: result,
   });
 });
@@ -21,7 +21,7 @@ const getAllLostItems: RequestHandler = catchAsync(async (req, res) => {
   res.status(201).json({
     success: true,
     statusCode: 200,
-    message: "Found item retrieved successfully",
+    message: "Lost item retrieved successfully",
     meta,
     data: result,
   });
