@@ -3,6 +3,7 @@ import auth from "../../middleware/auth";
 import { userController } from "./user.controller";
 import validateRequest from "../../utils/validateRequest";
 import { userValidationSchema } from "./user.validation";
+import { UserRole } from "../../constant/userRole";
 
 const router = Router();
 
@@ -10,7 +11,7 @@ router.get("/my-profile", auth(), userController.getMyProfile);
 
 router.patch(
   "/my-profile",
-  auth(),
+  auth(UserRole.Admin, UserRole.User),
   validateRequest(userValidationSchema.updateProfileSchema),
   userController.updateMyProfile,
 );

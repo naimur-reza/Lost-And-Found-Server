@@ -5,6 +5,8 @@ import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 import { handleZodError } from "../errors/handleZodError";
 import { IGenericError } from "../interfaces/error";
+import { JsonWebTokenError } from "jsonwebtoken";
+import handleJwtError from "../errors/handleJwtError";
 
 const globalErrorHandler = (
   err: any,
@@ -20,6 +22,10 @@ const globalErrorHandler = (
 
   if (err instanceof ZodError) {
     generalError = handleZodError(err);
+  }
+
+  if (err instanceof JsonWebTokenError) {
+    generalError = handleJwtError();
   }
 
   return res.status(generalError.status).json({
