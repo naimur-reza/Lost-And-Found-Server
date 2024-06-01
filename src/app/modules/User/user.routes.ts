@@ -7,7 +7,11 @@ import { UserRole } from "../../constant/userRole";
 
 const router = Router();
 
-router.get("/my-profile", auth(), userController.getMyProfile);
+router.get(
+  "/my-profile",
+  auth(UserRole.Admin, UserRole.User),
+  userController.getMyProfile,
+);
 
 router.patch(
   "/my-profile",
