@@ -13,6 +13,16 @@ const getMyProfile: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers: RequestHandler = catchAsync(async (req, res) => {
+  const result = await userService.getAllUsers();
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "User retrieved successfully",
+    data: result,
+  });
+});
+
 const updateMyProfile: RequestHandler = catchAsync(async (req, res) => {
   const user = req.user;
   const payload = req.body;
@@ -25,7 +35,19 @@ const updateMyProfile: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const removeUser: RequestHandler = catchAsync(async (req, res) => {
+  const result = await userService.removeUserFromDB(req.params.id);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "User deleted successfully",
+    data: result,
+  });
+});
+
 export const userController = {
   getMyProfile,
   updateMyProfile,
+  getAllUsers,
+  removeUser,
 };

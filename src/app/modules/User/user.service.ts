@@ -61,7 +61,47 @@ const updateMyProfile = async (
   return result;
 };
 
+const getAllUsers = async () => {
+  const result = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      mobile: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
+const removeUserFromDB = async (id: string) => {
+  await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const transaction = await prisma.$transaction([
+    prisma.profile.delete({
+      where: {
+        userId: id,
+      },
+    }),
+    prisma.user.delete({
+      where: {
+        id,
+      },
+    }),
+  ]);
+
+  return transaction;
+};
+
 export const userService = {
   getMyProfile,
   updateMyProfile,
+  getAllUsers,
+  removeUserFromDB,
 };

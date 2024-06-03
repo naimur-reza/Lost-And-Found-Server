@@ -25,7 +25,7 @@ const globalErrorHandler = (
   }
 
   if (err instanceof JsonWebTokenError) {
-    generalError = handleJwtError();
+    generalError = handleJwtError(err);
   }
 
   return res.status(generalError.status).json({

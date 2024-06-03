@@ -1,9 +1,10 @@
+import { JsonWebTokenError } from "jsonwebtoken";
 import { IGenericError } from "../interfaces/error";
 
-const handleJwtError = (): IGenericError => {
+const handleJwtError = (error: JsonWebTokenError): IGenericError => {
   const statusCode = 401;
   return {
-    message: "Invalid JWT token",
+    message: error.message || "Invalid",
     status: statusCode,
     errorDetails: {
       issues: [],

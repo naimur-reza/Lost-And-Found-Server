@@ -13,11 +13,15 @@ router.get(
   userController.getMyProfile,
 );
 
+router.get("/users", auth(UserRole.Admin), userController.getAllUsers);
+
 router.patch(
   "/my-profile",
   auth(UserRole.Admin, UserRole.User),
   validateRequest(userValidationSchema.updateProfileSchema),
   userController.updateMyProfile,
 );
+
+router.delete("/user/:id", auth(UserRole.Admin), userController.removeUser);
 
 export const userRoutes = router;

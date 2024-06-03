@@ -7,7 +7,11 @@ import { appRouter } from "./app/routes";
 export const app: Application = express();
 
 // middlewares
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // app router handling

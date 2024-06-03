@@ -14,6 +14,16 @@ const reportLostItem: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleLostItem: RequestHandler = catchAsync(async (req, res) => {
+  const result = await lostItemService.getSingleLostItemFromDB(req.params.id);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "Lost item retrieved successfully",
+    data: result,
+  });
+});
+
 const getAllLostItems: RequestHandler = catchAsync(async (req, res) => {
   const { result, meta } = await lostItemService.getAllLostItemsFromDB(
     req.query,
@@ -21,7 +31,7 @@ const getAllLostItems: RequestHandler = catchAsync(async (req, res) => {
   res.status(201).json({
     success: true,
     statusCode: 200,
-    message: "Lost item retrieved successfully",
+    message: "Lost items retrieved successfully",
     meta,
     data: result,
   });
@@ -30,4 +40,5 @@ const getAllLostItems: RequestHandler = catchAsync(async (req, res) => {
 export const lostItemController = {
   reportLostItem,
   getAllLostItems,
+  getSingleLostItem,
 };

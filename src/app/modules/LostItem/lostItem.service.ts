@@ -38,6 +38,28 @@ const reportLostItemIntoDB = async (user: JwtPayload, payload: any) => {
   return result;
 };
 
+const getSingleLostItemFromDB = async (id: string) => {
+  const result = await prisma.lostItem.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+      category: true,
+    },
+  });
+
+  return result;
+};
+
 const getAllLostItemsFromDB = async (query: any) => {
   const {
     page = 1,
@@ -99,4 +121,5 @@ const getAllLostItemsFromDB = async (query: any) => {
 export const lostItemService = {
   reportLostItemIntoDB,
   getAllLostItemsFromDB,
+  getSingleLostItemFromDB,
 };
