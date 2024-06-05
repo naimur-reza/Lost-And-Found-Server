@@ -85,6 +85,7 @@ const getAllLostItemsFromDB = async (query: any) => {
         itemName: { contains: itemName, mode: "insensitive" },
       },
     ].filter(Boolean),
+    
   };
 
   const sortAbleFields = ["itemName", "category", "lostDate"];

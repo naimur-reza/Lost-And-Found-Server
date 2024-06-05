@@ -96,7 +96,29 @@ const getAllFoundItemsFromDB = async (query: any) => {
   return { result, meta };
 };
 
+const getSingleFoundItem = async (id: string) => {
+  const result = await prisma.foundItem.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+      category: true,
+    },
+  });
+  return result;
+};
+
 export const foundItemService = {
   reportFoundItemIntoDB,
   getAllFoundItemsFromDB,
+  getSingleFoundItem,
 };

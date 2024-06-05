@@ -20,4 +20,10 @@ router.get(
   foundItemController.getAllFoundItems,
 );
 
+router.get(
+  "/:id",
+  auth(UserRole.Admin, UserRole.User),
+  foundItemController.getFoundItemById,
+);
+
 export const foundItemRoutes = router;

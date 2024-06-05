@@ -21,8 +21,18 @@ const getAllFoundItems: RequestHandler = catchAsync(async (req, res) => {
   res.status(201).json({
     success: true,
     statusCode: 200,
-    message: "Found item retrieved successfully",
+    message: "Found items retrieved successfully",
     meta,
+    data: result,
+  });
+});
+
+const getFoundItemById: RequestHandler = catchAsync(async (req, res) => {
+  const result = await foundItemService.getSingleFoundItem(req.params.id);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "Found item retrieved successfully",
     data: result,
   });
 });
@@ -30,4 +40,5 @@ const getAllFoundItems: RequestHandler = catchAsync(async (req, res) => {
 export const foundItemController = {
   reportFoundItem,
   getAllFoundItems,
+  getFoundItemById,
 };
