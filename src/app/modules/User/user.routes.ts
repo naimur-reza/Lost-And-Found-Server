@@ -18,7 +18,6 @@ router.get("/users", auth(UserRole.Admin), userController.getAllUsers);
 router.patch(
   "/my-profile",
   auth(UserRole.Admin, UserRole.User),
-  validateRequest(userValidationSchema.updateProfileSchema),
   userController.updateMyProfile,
 );
 

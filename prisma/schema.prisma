@@ -102,11 +102,15 @@ model LostItemCategory {
 }
 
 model Claim {
-  id                     String    @id @default(uuid())
-  userId                 String
-  foundItemId            String
-  status                 Status    @default(PENDING)
-  distinguishingFeatures String
+  id                       String    @id @default(uuid())
+  userId                   String
+  foundItemId              String
+  status                   Status    @default(PENDING)
+  distinguishingFeatures   String
+  description             String
+  additionalPhoto         String
+  proofOfOwnership        String
+  contactNo              String
   lostDate               DateTime
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
