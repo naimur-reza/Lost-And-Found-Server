@@ -9,9 +9,7 @@ const router = Router();
 
 router.post(
   "/",
-  auth(UserRole.User,
-    UserRole.Admin
-  ),
+  auth(UserRole.User, UserRole.Admin),
   validateRequest(claimValidationSchema.claimSchema),
   claimController.createClaim,
 );
@@ -27,6 +25,12 @@ router.patch(
   auth(UserRole.User, UserRole.Admin),
   validateRequest(claimValidationSchema.updateClaimSchema),
   claimController.updateClaimStatus,
+);
+
+router.get(
+  "/my-claims",
+  auth(UserRole.User, UserRole.Admin),
+  claimController.getMyClaimItems,
 );
 
 export const claimRoutes = router;

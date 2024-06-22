@@ -85,7 +85,7 @@ const getAllLostItemsFromDB = async (query: any) => {
         itemName: { contains: itemName, mode: "insensitive" },
       },
     ].filter(Boolean),
-    
+    isFound: false,
   };
 
   const sortAbleFields = ["itemName", "category", "lostDate"];
@@ -119,8 +119,45 @@ const getAllLostItemsFromDB = async (query: any) => {
   return { result, meta };
 };
 
+const getMyLostItemsFromDB = async (user: JwtPayload) => {
+  const result = await prisma.lostItem.findMany({
+    where: {
+      userId: user.id,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+      category: true,
+    },
+  });
+
+  return result;
+};
+
+const changeStatus = async (id: string) => {
+  const result = await prisma.lostItem.update({
+    where: {
+      id,
+    },
+    data: {
+      isFound: true,
+    },
+  });
+
+  return result;
+};
+
 export const lostItemService = {
   reportLostItemIntoDB,
   getAllLostItemsFromDB,
   getSingleLostItemFromDB,
+  getMyLostItemsFromDB,
+  changeStatus,
 };

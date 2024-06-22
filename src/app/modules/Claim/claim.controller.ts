@@ -35,8 +35,19 @@ const updateClaimStatus: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getMyClaimItems: RequestHandler = catchAsync(async (req, res) => {
+  const result = await claimServices.getMyClaimItemsFromDB(req.user);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "My claim item retrieved successfully!",
+    data: result,
+  });
+});
+
 export const claimController = {
   createClaim,
   getAllClaims,
   updateClaimStatus,
+  getMyClaimItems,
 };

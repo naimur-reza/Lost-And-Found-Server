@@ -54,8 +54,37 @@ const updateClaimStatus = async (id: string, status: Status) => {
   return result;
 };
 
+
+const getMyClaimItemsFromDB = async (user: JwtPayload) => {
+  const result = await prisma.claim.findMany({
+    where: {
+      userId: user.id,
+    },
+    include: {
+      foundItem: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+          category: true,
+        },
+      },
+    },
+  });
+
+  return result;
+}
+
+
 export const claimServices = {
   createClaimIntoDB,
   getAllClaimsFromDB,
   updateClaimStatus,
+  getMyClaimItemsFromDB,
 };

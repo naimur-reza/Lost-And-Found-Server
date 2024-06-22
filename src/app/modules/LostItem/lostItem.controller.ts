@@ -37,8 +37,31 @@ const getAllLostItems: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getMyLostItems: RequestHandler = catchAsync(async (req, res) => {
+  const result = await lostItemService.getMyLostItemsFromDB(req.user);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "My Lost items retrieved successfully",
+    data: result,
+  });
+});
+
+const changeStatus: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await lostItemService.changeStatus(id);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "My Lost items status changed successfully",
+    data: result,
+  });
+});
+
 export const lostItemController = {
   reportLostItem,
   getAllLostItems,
   getSingleLostItem,
+  getMyLostItems,
+  changeStatus,
 };

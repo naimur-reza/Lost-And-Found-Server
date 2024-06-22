@@ -117,8 +117,20 @@ const getSingleFoundItem = async (id: string) => {
   return result;
 };
 
+const getMyFoundItemsFromDB = async (user: JwtPayload) => {
+  console.log(user, "from my found");
+
+  const result = await prisma.foundItem.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
+  return result;
+};
+
 export const foundItemService = {
   reportFoundItemIntoDB,
   getAllFoundItemsFromDB,
   getSingleFoundItem,
+  getMyFoundItemsFromDB,
 };

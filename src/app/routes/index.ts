@@ -6,6 +6,7 @@ import { foundItemRoutes } from "../modules/FoundItem/foundItem.routes";
 import { claimRoutes } from "../modules/Claim/claim.routes";
 import { lostItemRouter } from "../modules/LostItem/lostItem.route";
 import { lostItemCategoryRoutes } from "../modules/LostItemCategory/lostItemCategory.routes";
+import { MetaRoutes } from "../modules/Meta/meta.route";
 
 const router = Router();
 
@@ -37,6 +38,10 @@ const options = [
   {
     path: "/lost-item-categories",
     route: lostItemCategoryRoutes,
+  },
+  {
+    path: "/meta",
+    route: MetaRoutes,
   },
 ];
 

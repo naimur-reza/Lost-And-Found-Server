@@ -21,6 +21,12 @@ router.get(
 );
 
 router.get(
+  "/my-found-items",
+  auth(UserRole.Admin, UserRole.User),
+  foundItemController.getMyFoundItems,
+);
+
+router.get(
   "/:id",
   auth(UserRole.Admin, UserRole.User),
   foundItemController.getFoundItemById,

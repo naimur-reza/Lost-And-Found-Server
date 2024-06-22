@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { foundItemService } from "./foundItem.service";
 import catchAsync from "../../utils/catchAsync";
+import { foundItemService } from "./foundItem.service";
 
 const reportFoundItem: RequestHandler = catchAsync(async (req, res) => {
   const user = req.user;
@@ -37,8 +37,19 @@ const getFoundItemById: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getMyFoundItems: RequestHandler = catchAsync(async (req, res) => {
+  const result = await foundItemService.getMyFoundItemsFromDB(req.user);
+  res.status(201).json({
+    success: true,
+    statusCode: 200,
+    message: "My Found items retrieved successfully",
+    data: result,
+  });
+});
+
 export const foundItemController = {
   reportFoundItem,
   getAllFoundItems,
   getFoundItemById,
+  getMyFoundItems,
 };
