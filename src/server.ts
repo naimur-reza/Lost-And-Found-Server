@@ -1,4 +1,5 @@
 import { app } from "./app";
+import { seedSuperAdmin } from "./app/db";
 
 const port = process.env.PORT;
 
@@ -12,4 +13,7 @@ async function main() {
     console.log(error);
   }
 }
+
+seedSuperAdmin();
+
 main().catch(err => console.log(err));

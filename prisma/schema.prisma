@@ -97,6 +97,7 @@ enum Status {
 enum USER_ROLE {
   USER
   ADMIN
+  SUPER_ADMIN
 }
 
 enum CATEGORY {
