@@ -5,6 +5,10 @@ import { MetaController } from "./meta.controller";
 
 const router = express.Router();
 
-router.get("/", auth(UserRole.Admin), MetaController.fetchDashboardMetaData);
+router.get(
+  "/",
+  auth(UserRole.Admin, UserRole.Super_Admin),
+  MetaController.fetchDashboardMetaData,
+);
 
 export const MetaRoutes = router;
