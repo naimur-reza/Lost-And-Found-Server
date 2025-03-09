@@ -45,7 +45,7 @@ model Item {
   date           DateTime
   brand          String
   image          String
-  timeFound      String
+  time           String
   primaryColor   String
   secondaryColor String
   type           CATEGORY
@@ -56,7 +56,7 @@ model Item {
   category       Category @relation(fields: [categoryId], references: [id])
   user           User     @relation(fields: [userId], references: [id])
 
-  @@map("foundItems")
+  @@map("items")
 }
 
 model Category {

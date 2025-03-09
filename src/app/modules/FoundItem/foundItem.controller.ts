@@ -1,15 +1,17 @@
 import { RequestHandler } from "express";
+import { status } from "http-status";
 import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
 import { foundItemService } from "./foundItem.service";
 
 const reportFoundItem: RequestHandler = catchAsync(async (req, res) => {
   const user = req.user;
   const foundItem = req.body;
   const result = await foundItemService.reportFoundItemIntoDB(user, foundItem);
-  res.status(201).json({
+  sendResponse(res, {
     success: true,
-    statusCode: 201,
-    message: "Found item reported successfully",
+    statusCode: status.CREATED,
+    message: "Items posted successfully",
     data: result,
   });
 });
