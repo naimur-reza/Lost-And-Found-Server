@@ -37,40 +37,41 @@ model Profile {
 }
 
 model FoundItem {
-  id            String            @id @default(uuid())
-  userId        String
-  itemName      String
-  categoryId    String
-  description   String?
-  location      String
-  date          DateTime
-  brand         String
-  image         String
-  timeFound     String
-  primaryColor  String
-  isClaimed     Boolean @default(false)
+  id             String   @id @default(uuid())
+  userId         String
+  itemName       String
+  categoryId     String
+  description    String?
+  location       String
+  date           DateTime
+  brand          String
+  image          String
+  timeFound      String
+  primaryColor   String
+  isClaimed      Boolean  @default(false)
   secondaryColor String
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  claim         Claim[]
-  category      FoundItemCategory @relation(fields: [categoryId], references: [id])
-  user          User              @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  claim          Claim[]
+  category       Category @relation(fields: [categoryId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 
   @@map("foundItems")
 }
 
-model FoundItemCategory {
+model Category {
   id        String      @id @default(uuid())
-  name      String
+  title     CATEGORY
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  foundItem FoundItem[]
+  FoundItem FoundItem[]
+  LostItem  LostItem[]
 
-  @@map("foundItemsCategories")
+  @@map("categories")
 }
 
 model LostItem {
-  id             String           @id @default(uuid())
+  id             String   @id @default(uuid())
   userId         String
   itemName       String
   categoryId     String
@@ -82,34 +83,24 @@ model LostItem {
   timeLost       String
   primaryColor   String
   secondaryColor String
-  isFound        Boolean @default(false) 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  category       LostItemCategory @relation(fields: [categoryId], references: [id])
-  user           User             @relation(fields: [userId], references: [id])
+  isFound        Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  category       Category @relation(fields: [categoryId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 
   @@map("lostItems")
 }
 
-model LostItemCategory {
-  id        String     @id @default(uuid())
-  name      String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  lostItem  LostItem[]
-
-  @@map("lostItemsCategories")
-}
-
 model Claim {
-  id                       String    @id @default(uuid())
-  userId                   String
-  foundItemId              String
-  status                   Status    @default(PENDING)
-  distinguishingFeatures   String
-  description             String
-  additionalPhoto         String
-  proofOfOwnership        String
+  id                     String    @id @default(uuid())
+  userId                 String
+  foundItemId            String
+  status                 Status    @default(PENDING)
+  distinguishingFeatures String
+  description            String
+  additionalPhoto        String
+  proofOfOwnership       String
   contactNo              String
   lostDate               DateTime
   createdAt              DateTime  @default(now())
@@ -129,4 +120,9 @@ enum Status {
 enum USER_ROLE {
   USER
   ADMIN
+}
+
+enum CATEGORY {
+  LOST_ITEM
+  FOUND_ITEM
 }
