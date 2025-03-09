@@ -2,7 +2,7 @@ import { object, string } from "zod";
 
 const claimSchema = object({
   body: object({
-    foundItemId: string().uuid(),
+    itemId: string().uuid(),
     distinguishingFeatures: string({
       required_error: "distinguishingFeatures is required.",
     }),

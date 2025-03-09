@@ -1,11 +1,11 @@
+import { Status } from "@prisma/client";
 import { JwtPayload } from "jsonwebtoken";
 import prisma from "../../shared/prisma";
-import { Status } from "@prisma/client";
 
 const createClaimIntoDB = async (user: JwtPayload, payload: any) => {
-  await prisma.foundItem.findUniqueOrThrow({
+  await prisma.item.findUniqueOrThrow({
     where: {
-      id: payload.foundItemId,
+      id: payload.itemId,
     },
   });
 
@@ -22,7 +22,7 @@ const createClaimIntoDB = async (user: JwtPayload, payload: any) => {
 const getAllClaimsFromDB = async () => {
   const result = await prisma.claim.findMany({
     include: {
-      foundItem: {
+      item: {
         include: {
           user: {
             select: {
@@ -54,14 +54,13 @@ const updateClaimStatus = async (id: string, status: Status) => {
   return result;
 };
 
-
 const getMyClaimItemsFromDB = async (user: JwtPayload) => {
   const result = await prisma.claim.findMany({
     where: {
       userId: user.id,
     },
     include: {
-      foundItem: {
+      item: {
         include: {
           user: {
             select: {
@@ -79,8 +78,7 @@ const getMyClaimItemsFromDB = async (user: JwtPayload) => {
   });
 
   return result;
-}
-
+};
 
 export const claimServices = {
   createClaimIntoDB,

@@ -1,11 +1,11 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { items } from "./item.service";
+import { itemServices } from "./item.service";
 
 const reportItem = catchAsync(async (req, res) => {
   const user = req.user;
   const item = req.body;
-  const result = await items.reportItemIntoDB(user, item);
+  const result = await itemServices.reportItemIntoDB(user, item);
   sendResponse(res, {
     success: true,
     statusCode: 201,
@@ -15,7 +15,7 @@ const reportItem = catchAsync(async (req, res) => {
 });
 
 const getAllItems = catchAsync(async (req, res) => {
-  const { result, meta } = await items.getAllItemssFromDB(req.query);
+  const { result, meta } = await itemServices.getAllItemsFromDB(req.query);
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -26,7 +26,7 @@ const getAllItems = catchAsync(async (req, res) => {
 });
 
 const getItemsById = catchAsync(async (req, res) => {
-  const result = await items.getSingleItems(req.params.id);
+  const result = await itemServices.getSingleItem(req.params.id);
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -36,7 +36,7 @@ const getItemsById = catchAsync(async (req, res) => {
 });
 
 const getMyItems = catchAsync(async (req, res) => {
-  const result = await items.getMyItemssFromDB(req.user);
+  const result = await itemServices.getMyItemsFromDB(req.user);
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -45,7 +45,7 @@ const getMyItems = catchAsync(async (req, res) => {
   });
 });
 
-export const itemsController = {
+export const itemController = {
   reportItem,
   getAllItems,
   getItemsById,
