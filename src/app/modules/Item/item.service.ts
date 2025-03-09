@@ -31,13 +31,23 @@ const reportItemIntoDB = async (
 };
 
 const getAllItemsFromDB = async (payload: any) => {
+  const { searchQuery = "", sortBy = "createdAt", sortOrder = "asc" } = payload;
   const page = parseInt(payload.page) || 1;
   const limit = parseInt(payload.limit) || 10;
 
   const skip = (page - 1) * limit;
 
+  const validSortOrder = sortOrder === "desc" ? "desc" : "asc";
+
   const [items, total] = await Promise.all([
     prisma.item.findMany({
+      where: {
+        OR: [
+          { itemName: { contains: searchQuery, mode: "insensitive" } },
+          { location: { contains: searchQuery, mode: "insensitive" } },
+        ],
+      },
+      orderBy: { [sortBy]: validSortOrder },
       skip,
       take: limit,
       select: {
@@ -51,7 +61,14 @@ const getAllItemsFromDB = async (payload: any) => {
         image: true,
       },
     }),
-    prisma.item.count(),
+    prisma.item.count({
+      where: {
+        OR: [
+          { itemName: { contains: searchQuery, mode: "insensitive" } },
+          { location: { contains: searchQuery, mode: "insensitive" } },
+        ],
+      },
+    }),
   ]);
 
   const meta: TMeta = {
