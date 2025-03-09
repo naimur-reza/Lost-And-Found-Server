@@ -14,4 +14,6 @@ router.post(
   itemController.reportItem,
 );
 
+router.get("/", itemController.getAllItems);
+
 export const ItemRoutes = router;

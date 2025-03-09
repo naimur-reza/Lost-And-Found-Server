@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { TMeta } from "../types/global.types";
 
 type TResponse<T> = {
   statusCode: number;
@@ -7,13 +8,6 @@ type TResponse<T> = {
   data?: T;
   meta?: TMeta;
   token?: string;
-};
-
-type TMeta = {
-  limit: number;
-  page: number;
-  total: number;
-  totalPage: number;
 };
 
 const sendResponse = <T>(
