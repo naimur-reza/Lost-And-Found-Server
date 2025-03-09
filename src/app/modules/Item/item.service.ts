@@ -18,7 +18,12 @@ const reportItemIntoDB = async (
       userId: user.id,
       ...payload,
     },
-    select: { user: true },
+    select: {
+      id: true,
+      itemName: true,
+      category: { select: { title: true } },
+      user: { select: { id: true, name: true, email: true } },
+    },
   });
 
   return result;
