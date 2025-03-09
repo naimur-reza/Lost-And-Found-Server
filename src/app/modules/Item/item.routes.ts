@@ -16,4 +16,12 @@ router.post(
 
 router.get("/", itemController.getAllItems);
 
+router.get(
+  "/:id",
+  auth(UserRole.User, UserRole.Admin, UserRole.Super_Admin),
+  itemController.getItemsById,
+);
+
+router.get("/my-items", auth(UserRole.User), itemController.getMyItems);
+
 export const ItemRoutes = router;
