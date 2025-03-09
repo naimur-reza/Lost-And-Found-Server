@@ -1,5 +1,7 @@
-import { z } from "zod";
+import { object, z } from "zod";
 
-export const createCategoryValidation = z.object({
-  title: z.string().nonempty(),
+export const createCategoryValidation = object({
+  body: object({
+    title: z.string().nonempty(),
+  }),
 });
