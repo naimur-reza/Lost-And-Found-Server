@@ -1,13 +1,19 @@
 import { Status } from "@prisma/client";
+import status from "http-status";
 import { JwtPayload } from "jsonwebtoken";
+import GenericError from "../../errors/GenericError";
 import prisma from "../../shared/prisma";
 
 const createClaimIntoDB = async (user: JwtPayload, payload: any) => {
-  await prisma.item.findUniqueOrThrow({
+  const item = await prisma.item.findUniqueOrThrow({
     where: {
       id: payload.itemId,
     },
   });
+
+  if (item.type === "LOST_ITEM") {
+    throw new GenericError(status.BAD_REQUEST, "You cannot claim a lost item.");
+  }
 
   const result = await prisma.claim.create({
     data: {
