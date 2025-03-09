@@ -23,7 +23,7 @@ const options: TOptions = [
     route: userRoutes,
   },
   {
-    path: "/category",
+    path: "/categories",
     route: CategoryRoutes,
   },
   {

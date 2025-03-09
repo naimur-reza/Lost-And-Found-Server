@@ -90,6 +90,7 @@ const getSingleItem = async (id: string) => {
 };
 
 const getMyItemsFromDB = async (user: JwtPayload) => {
+  console.log(user);
   const result = await prisma.item.findMany({
     where: {
       userId: user.id,
