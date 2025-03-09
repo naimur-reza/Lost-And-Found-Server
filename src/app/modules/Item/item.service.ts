@@ -81,9 +81,23 @@ const getAllItemsFromDB = async (payload: any) => {
   return { result: items, meta };
 };
 
-const getSingleItem = async () => {};
+const getSingleItem = async (id: string) => {
+  const result = await prisma.item.findUniqueOrThrow({
+    where: { id },
+  });
 
-const getMyItemsFromDB = async () => {};
+  return result;
+};
+
+const getMyItemsFromDB = async (user: JwtPayload) => {
+  const result = await prisma.item.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  return result;
+};
 
 export const itemServices = {
   reportItemIntoDB,
